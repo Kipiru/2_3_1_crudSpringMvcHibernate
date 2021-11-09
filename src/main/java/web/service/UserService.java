@@ -3,7 +3,6 @@ package web.service;
 import web.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -11,9 +10,9 @@ public interface UserService {
 
     void create(User user);
 
-    Optional<User> read(int id);
+    User readById(int id);
 
-    void delete(int id);
+    void delete(User user);
 
     void updateUser(User user);
 

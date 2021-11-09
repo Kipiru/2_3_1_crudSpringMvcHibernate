@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public ModelAndView allUsers() {
         List<User> userList = userService.getAll();
         ModelAndView modelAndView = new ModelAndView();
@@ -29,27 +29,27 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
+    @GetMapping("/new")
     public String newUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "new_user";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping("/save")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.create(user);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable int id, Model model) {
-        User user = userService.read(id).get();
+        User user = userService.readById(id);
         model.addAttribute("user", user);
         return "edit";
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @PostMapping("/update/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/";
@@ -57,7 +57,7 @@ public class UserController {
 
     @RequestMapping("/delete/{id}")
     public String deleteUserForm(@PathVariable int id) {
-        userService.delete(id);
+        userService.delete(userService.readById(id));
         return "redirect:/";
     }
 
